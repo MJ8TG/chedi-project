@@ -13,11 +13,11 @@
 ## 1. Database & Environment Setup
 - **Goal:** Get the database running locally and schema initialized.
 - **Subtasks:**
-  - [ ] Ensure MySQL service is running (Port 3306).
-  - [ ] Configure `DATABASE_URL` in `.env.local` (override default `.env`).
-  - [ ] Create database: `php bin/console doctrine:database:create`.
-  - [ ] Generate migration for User, Game, Tournament, Prediction: `php bin/console doctrine:migrations:diff`.
-  - [ ] Execute migration: `php bin/console doctrine:migrations:migrate`.
+  - [x] Ensure MySQL service is running (Port 3306).
+  - [x] Configure `DATABASE_URL` in `.env.local` (override default `.env`).
+  - [x] Create database: `php bin/console doctrine:database:create`.
+  - [x] Generate migration for User, Game, Tournament, Prediction: `php bin/console doctrine:migrations:diff`.
+  - [x] Execute migration: `php bin/console doctrine:migrations:migrate`.
 - **Files to touch:** `.env.local`, `migrations/*`
 - **Verification:**
   - Run `php bin/console dbal:run-sql "SHOW TABLES"` -> Should list `user`, `game`, `tournament`, `prediction`.
@@ -27,12 +27,12 @@
 ## 2. Data Fixtures (Dummy Data)
 - **Goal:** Populate DB with test data to verify UI.
 - **Subtasks:**
-  - [ ] Install fixtures bundle: `composer require --dev orm-fixtures`.
-  - [ ] Create `AppFixtures` to load:
+  - [x] Install fixtures bundle: `composer require --dev orm-fixtures`.
+  - [x] Create `AppFixtures` to load:
     - 5 Games (CS:GO, LoL, etc.).
     - 10 Tournaments (Upcoming, Ongoing, Finished).
     - 2 Users (admin, regular).
-  - [ ] Run fixtures: `php bin/console doctrine:fixtures:load`.
+  - [x] Run fixtures: `php bin/console doctrine:fixtures:load`.
 - **Files to touch:** `src/DataFixtures/AppFixtures.php`
 - **Verification:**
   - Run `php bin/console dbal:run-sql "SELECT count(*) FROM game"` -> Should be > 0.
@@ -85,9 +85,9 @@
 ## 6. User Authentication & Permissions
 - **Goal:** Allow users to log in (required for predictions).
 - **Subtasks:**
-  - [ ] Generate Login form: `php bin/console make:auth`.
-  - [ ] Create Registration form: `php bin/console make:registration-form`.
-  - [ ] Verify `ROLE_USER` hierarchy in `security.yaml`.
+  - [x] Generate Login form: `php bin/console make:auth`.
+  - [x] Create Registration form: `php bin/console make:registration-form`.
+  - [x] Verify `ROLE_USER` hierarchy in `security.yaml`.
 - **Files to touch:** `src/Security/*`, `templates/security/*`, `src/Controller/RegistrationController.php`
 - **Verification:**
   - Can register a new user.
@@ -95,19 +95,15 @@
 - **Est. Complexity:** M
 - **Commit:** `Setup Auth (Login/Register)`
 
-## 7. User Feature: Predictions
-- **Goal:** Users can predict winners for upcoming tournaments.
-- **Subtasks:**
-  - [ ] `PredictionController::new`: Form to submit prediction (Tournament ID from route).
-  - [ ] Security: Deny if user already predicted or Tournament started.
-  - [ ] `PredictionController::index`: List "My Predictions" (History).
-  - [ ] Templates: `prediction/new.html.twig`, `prediction/index.html.twig`.
+## 7. User Feature: Predictions (Logic)
+- [x] Create `Prediction` entity (if not exists).
+- [x] Create `PredictionController` (`new`, `index`).
+- [x] Create templates (`new.html.twig`, `index.html.twig`).
 - **Files to touch:** `src/Controller/PredictionController.php`, `src/Form/PredictionType.php`, `templates/prediction/*`
 - **Verification:**
   - Logged-in user: Can verify prediction on random tournament.
   - `/predictions` shows the record.
 - **Est. Complexity:** L
-- **Commit:** `Implement User Predictions`
 
 ## 8. Admin CRUD System
 - **Goal:** Back-office for content management.
